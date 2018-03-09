@@ -1,0 +1,98 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8" />
+	<style>
+		body {
+			width:400px;
+			padding:1rem;
+		}
+		ul, li {
+			padding:0;
+			margin:0;
+		}
+		li {
+			margin-left:15px;
+		}
+		a {
+			color:black;
+		}
+		input[type=text] {
+			width:100px;
+		}
+		.hidden {
+			display:none;
+		}
+		.bold {
+			font-weight:bold;
+		}
+		.blue {
+			color:blue;
+		}
+		.red {
+			color:red;
+		}
+		.marginBottom20 {
+			margin-bottom:20px;
+		}
+	</style>
+	<script src="popup_script.js"></script>
+</head>
+<body>
+	<h1>MultiFind</h1>
+	<div id="header" class="marginBottom20">
+		<div>만든사람: seunggabi</div>
+		<div>이메일: seunggabi@naver.com</div>
+		<div>블로그: <a href="http://seunggabi.tistory.com" target="_blank">http://seunggabi.tistory.com</a></div>
+		<div>업데이트: 2018.02.23</div>
+	</div>
+	<div id="body" class="marginBottom20">
+		<div class="bold">
+			[검색키워드]
+			<button id="plus">+</button>
+		</div>
+		<div id="template" class="hidden">
+			<div id="findBox_" class="findBox">
+				<input type="text" class="text" placeholder="keyword">
+				<button class="prev">∧</button>
+				<button class="next">∨</button>
+				<button class="remove">X</button>
+				<span class="count hidden">
+					(<span class="index"></span> / <span class="total"></span>)
+				</span>
+			</div>
+		</div>
+		<div id="list">
+			<div id="findBox_0" class="findBox">
+				<input type="text" class="text" placeholder="keyword">
+				<button class="prev">∧</button>
+				<button class="next">∨</button>
+				<button class="remove">X</button>
+				<span class="count hidden">
+					(<span class="index"></span> / <span class="total"></span>)
+				</span>
+			</div>
+		</div>
+		<div>
+			<button id="find">검색</button>
+		</div>
+	</div>
+	<div id="footer">
+		<div class="marginBottom20">
+			<span class="bold blue">사용해보시고 좋다고 느껴지시면 좋은 리뷰 부탁드려용!</span>
+		 	<a href="" target="_blank" class="bold red">(링크)</a>
+		</div>
+		<div>
+			<div class="bold">
+			[개발자가 만든 것]
+			<a id="toggleSiteList" href="#">(펼치기)</a>
+			</div>
+			<ul id="siteList" class="hidden">
+				<li><a href="http://ExcelMergeTool.com" target="_blank">ExcelMergeTool</a></li>
+				<li><a href="https://chrome.google.com/webstore/detail/autoskip/bmiijndgbkepjhffnidelmdkagfgcnil/reviews?hl=ko" target="_blank">AutoSkip</a></li>
+				<li><a href="https://chrome.google.com/webstore/detail/autorefresh/odipbppcfaaedgdlljgjdfneogahefoj/reviews?hl=ko" target="_blank">AutoRefresh</a></li>
+			</ul>
+		</div>
+	</div>
+</body>
+</html>
