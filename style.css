@@ -1,0 +1,32 @@
+body {
+    width:400px;
+    padding:1rem;
+}
+ul, li {
+    padding:0;
+    margin:0;
+}
+li {
+    margin-left:15px;
+}
+a {
+    color:black;
+}
+input[type=text] {
+    width:100px;
+}
+.hidden {
+    display:none;
+}
+.bold {
+    font-weight:bold;
+}
+.blue {
+    color:blue;
+}
+.red {
+    color:red;
+}
+.marginBottom20 {
+    margin-bottom:20px;
+}
