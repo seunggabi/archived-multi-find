@@ -1,24 +1,15 @@
 function renderView() {
-	// DATAS.forEach(function(item) {
-	// 	chrome.cookies.get({url:MASTER_URL, name:item}, function(c) {
-	// 		var DOM = document.querySelector("#"+item);
-	// 		DOM.value = c.value;
-	// 	});
-	// });
 }
 
 function bindEvent() {
-	var siteListButton = document.querySelector("a#toggleSiteList");
-	siteListButton && siteListButton.addEventListener("click", toggleSiteList);
+	var $siteListButton = $("#toggleSiteList");
+    $siteListButton && $siteListButton.on("click", toggleSiteList);
 
-	var plusButton = document.querySelector("button#plus");
-	plusButton && plusButton.addEventListener("click", clickPlus);
+	var $plusButton = $("#plus");
+    $plusButton && $plusButton.on("click", clickPlus);
 
-	var delegation = new Delegate(document.body);
-	var removeButtons = document.querySelectorAll("#list button.remove");
-	removeButtons && removeButtons.forEach(function(button) {
-		button.addEventListener("click", clickRemove);
-	});
+	var $list = $("#list");
+    $list && $list.on("click", "button.remove", clickRemove);
 }
 
 function init() {
@@ -29,17 +20,17 @@ function init() {
 function clickPlus() {
 	window.findBoxIndex = window.findBoxIndex || 1;
 
-	var $list = document.querySelector("#list");
-	var $findBoxTemplate = document.querySelector("#template #findBox_");
+	var $list = $("#list");
+	var $template = $("#template #findBox_");
 
-	var $newFindBox = $findBoxTemplate.cloneNode(true);
-	$newFindBox.id += window.findBoxIndex++;
+	var $new = $template.clone();
+	$new.attr("id", $new.attr("id") + window.findBoxIndex++);
 
-	$list.appendChild($newFindBox);
+	$list.append($new);
 }
 
 function clickRemove(event) {
-	event.currentTarget.parentElement.remove();
+	event.target.parentElement.remove();
 }
 
 
