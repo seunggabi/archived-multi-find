@@ -1,36 +1,56 @@
 function matching(ids){
-	chrome.tabs.executeScript({
-		code: "document.querySelector('body').innerHTML"
-	}, function (result) {
-		ids.forEach(function(id) {
-			var $target = $("#"+id);
-			var bodyText = result[0];
-			var match = bodyText.match(new RegExp($target.find(".text").val(), "gi")) || [];
-			var totalCount = match.length;
+    chrome.tabs.getAllInWindow(function(tabs){
+    	tabs.forEach(function(tab) {
+    		console.log(tab);
+            chrome.tabs.executeScript(
+                tab.id,
+			    {
+                    code: "document.querySelector('body').innerHTML"
+	            },
+	            function (result) {
+	                ids.forEach(function(id) {
+	                    var $target = $("#"+id.id);
+	                    var bodyText = result[0];
+	                    var match = bodyText.match(new RegExp(id.value, "gi")) || [];
+	                    var totalCount = match.length;
 
-			$target.find(".count").removeClass("hidden");
-			$target.find(".total").html(totalCount);
-		});
-	});
+	                    $target.find(".count").removeClass("hidden");
+	                    $target.find(".total").html(totalCount);
+	                });
+	            }
+            );
+	    });
+    });
 }
 
+function renderView(data) {
+	var ids = data.ids || [];
+	var length = ids.length;
 
-chrome.storage.sync.get(function (data) {
-	// document.querySelector("#user").value = data.userWords;
-	// matching(data.ids);
-});
+	while(length > 1) {
+		--length;
+		clickPlus();
+	}
 
-function renderView() {}
+    ids.forEach(function(id) {
+        $("#"+id.id).find("input").val(id.value);
+    });
+}
 
 function bindEvent() {
 	$("#toggleSiteList").on("click", toggleSiteList);
 	$("#plus").on("click", clickPlus);
-	$("#list").on("click", "button.remove", clickRemove);
+	$("#list").on("click", "button.remove", function clickRemove(event) {
+        event.target.parentElement.remove();
+    });
 
 	$("body").on("click", "#find", function() {
 		var ids = [];
 		$("#list .findBox").each(function() {
-			ids.push($(this).attr("id"));
+			ids.push({
+				id: $(this).attr("id"),
+				value: $(this).find("input").val()
+			});
 		});
 
 		chrome.storage.sync.set({
@@ -39,11 +59,6 @@ function bindEvent() {
 
 		matching(ids);
 	});
-}
-
-function init() {
-	renderView();
-	bindEvent();
 }
 
 function clickPlus() {
@@ -58,11 +73,6 @@ function clickPlus() {
 	$list.append($new);
 }
 
-function clickRemove(event) {
-	event.target.parentElement.remove();
-}
-
-
 function toggleSiteList() {
 	if(document.querySelector("#siteList").className.indexOf("hidden") >= 0) {
 		document.querySelector("#siteList").className = "";
@@ -71,4 +81,11 @@ function toggleSiteList() {
 	}
 }
 
-window.addEventListener("load", init);
+window.addEventListener("load", function init() {
+    bindEvent();
+
+    chrome.storage.sync.get(function (data) {
+        console.log(data);
+        renderView(data);
+    });
+});
